@@ -1,5 +1,6 @@
 # from openai import OpenAI
 from langchain_community.llms import tongyi
+from langchain_community.chat_models.tongyi import ChatTongyi
 import streamlit as st
 
 with st.sidebar:
@@ -21,7 +22,7 @@ if prompt := st.chat_input():
         st.info("Please add your OpenAI API key to continue.")
         st.stop()
 
-    client = tongyi(dashscope_api_key=tongyi_api_key)
+    client = ChatTongyi(dashscope_api_key=tongyi_api_key)
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
     response = client.chat.completions.create(model="qwen-turbo", messages=st.session_state.messages)
